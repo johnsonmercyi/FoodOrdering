@@ -1,6 +1,6 @@
 import products from "@/assets/data/products";
 import { PizzaSize } from "@/assets/types";
-import Button from "@/src/components/Button/Button";
+import Button from "@/src/components/ui/Button/Button";
 import Colors from "@/src/constants/Colors";
 import { useCart } from "@/src/providers/CartProvider";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";

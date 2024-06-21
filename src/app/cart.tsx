@@ -2,7 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { FlatList, Platform, Text, View } from "react-native";
 import { useCart } from "../providers/CartProvider";
 import CartListItem from "../components/CartListItem/CartListItem";
-import Button from "../components/Button/Button";
+import Button from "../components/ui/Button/Button";
 
 const CartScreen = ({}): JSX.Element => {
   const { items, total } = useCart();

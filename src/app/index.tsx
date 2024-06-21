@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native';
 import React from 'react';
 import { Link } from 'expo-router';
-import Button from '../components/Button/Button';
+import Button from '../components/ui/Button/Button';
 
 const index = () => {
   return (
