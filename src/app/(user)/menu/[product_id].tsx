@@ -12,7 +12,7 @@ const Product = (): JSX.Element => {
   const sizes: PizzaSize[] = ["S", "M", "L", "XL"];
   const product = products.find((p) => p.id === Number(product_id));
 
-  const [selectedSize, setSelectedSize] = useState<PizzaSize>(sizes[0]);
+  const [selectedSize, setSelectedSize] = useState<PizzaSize>(sizes[1]);
   const { addItem } = useCart();
 
   const router = useRouter();
@@ -31,7 +31,7 @@ const Product = (): JSX.Element => {
     <View style={styles.container}>
       <Stack.Screen options={{ title: `${product.name}` }} />
       <Image source={{ uri: product.image }} style={styles.image} />
-      <Text>Select size</Text>
+      <Text style={{fontWeight: 'bold'}}>Select size</Text>
       <View style={styles.sizes}>
         {sizes.map((size) => (
           <Pressable

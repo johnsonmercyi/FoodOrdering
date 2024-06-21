@@ -5,7 +5,7 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { Link, Stack } from "expo-router";
+import { Link, Stack, useSegments } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import "react-native-reanimated";
@@ -59,13 +59,14 @@ function RootLayoutNav() {
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <CartProvider>
         <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="(admin)" options={{ headerShown: false }} />
+          <Stack.Screen name="(user)" options={{ headerShown: false }} />
           <Stack.Screen
             name="cart"
             options={{
               headerRight: () => (
                 <View>
-                  <Link href="/menu/" asChild>
+                  <Link href={`/menu/`} asChild>
                     <Pressable
                       style={{
                         alignItems: "center",
@@ -74,8 +75,8 @@ function RootLayoutNav() {
                     >
                       {({ pressed }) => (
                         <FontAwesome
-                          name="cutlery"
-                          size={25}
+                          name="cart-plus"
+                          size={30}
                           color={Colors[colorScheme ?? "light"].tint}
                           style={{
                             opacity: pressed ? 0.5 : 1,

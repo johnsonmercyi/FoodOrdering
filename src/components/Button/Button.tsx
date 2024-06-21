@@ -38,6 +38,6 @@ const styles = StyleSheet.create({
     color: "white",
   },
   pressed: {
-    opacity: 0.75,
+    // opacity: 0.75,
   },
 });

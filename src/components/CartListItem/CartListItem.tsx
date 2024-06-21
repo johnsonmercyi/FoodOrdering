@@ -49,7 +49,7 @@ const CartListItem = ({ cartItem }: CartItemType) => {
           <FontAwesome
             name="trash"
             color={"gray"}
-            style={{ padding: 5, fontSize: 25, color: "#555" }}
+            style={{ padding: 5, fontSize: 20, color: "#555" }}
           />
         </Pressable>
       </View>
@@ -95,10 +95,10 @@ const styles = StyleSheet.create({
   },
   quantity: {
     fontWeight: "500",
-    fontSize: 16,
+    fontSize: 13,
   },
   actionButton: {
-    width: 30,
+    width: 25,
     borderRadius: 15,
     aspectRatio: 1,
     alignItems: "center",
