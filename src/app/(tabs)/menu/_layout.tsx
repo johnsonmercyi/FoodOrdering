@@ -13,27 +13,25 @@ function TabBarIcon(props: {
 export default function MenuStack() {
   const colorScheme = useColorScheme();
   return (
-    <Stack>
-      <Stack.Screen
-        name="index"
-        options={{
-          title: "Menu",
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="user-circle"
-                    size={30}
-                    color={Colors[colorScheme ?? "light"].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
-        }}
-      />
+    <Stack
+      screenOptions={{
+        title: 'Menu',
+        headerRight: () => (
+          <Link href="/cart" asChild>
+            <Pressable>
+              {({ pressed }) => (
+                <FontAwesome
+                  name="shopping-cart"
+                  size={30}
+                  color={Colors[colorScheme ?? "light"].text}
+                  style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                />
+              )}
+            </Pressable>
+          </Link>
+        ),
+      }}
+    >
     </Stack>
   );
 }
