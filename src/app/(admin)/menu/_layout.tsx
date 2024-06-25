@@ -34,27 +34,6 @@ export default function MenuStack() {
           ),
         }}
       />
-
-      <Stack.Screen
-        name="[product_id]"
-        options={{
-          title: "Menu",
-          headerRight: () => (
-            <Link href="/cart" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="pencil-square-o"
-                    size={30}
-                    color={Colors[colorScheme ?? "light"].tint}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
-        }}
-      />
     </Stack>
   );
 }

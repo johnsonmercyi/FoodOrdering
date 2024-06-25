@@ -1,17 +1,70 @@
-import { Text, TextInput, View } from "react-native";
+import Colors from "@/src/constants/Colors";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 
 type InputType = {
-  error?: boolean,
+  error?: boolean;
+  errorMessage?:string;
+  label?: string;
 } & React.ComponentPropsWithoutRef<typeof TextInput>;
 
-const Input = ({ error, value, ...otherTextInputProps }: InputType):  JSX.Element => {
+const Input = ({
+  error,
+  errorMessage,
+  value,
+  label,
+  ...otherTextInputProps
+}: InputType): JSX.Element => {
   return (
-    <View>
-      <Text>label</Text>
-      <TextInput {...otherTextInputProps} value={value} />
-      {error && <Text>error</Text>}
+    <View style={styles.container}>
+      {label ? <Text style={styles.label}>{label}</Text> : null}
+
+      <TextInput
+        {...otherTextInputProps}
+        value={value}
+        style={[
+          styles.input,
+          {
+            marginBottom: !error ? 10 : 0,
+            borderColor: error ? "#dc0933" : "#bbb",
+            borderWidth: error ? 1 : 0.5,
+          },
+        ]}
+      />
+      {error && (
+        <Text
+          style={[
+            styles.error,
+            {
+              marginBottom: error ? 10 : 0,
+            },
+          ]}
+        >
+          {errorMessage || `This field is required`}
+        </Text>
+      )}
     </View>
   );
-}
+};
+
+const styles = StyleSheet.create({
+  container: {},
+  label: {
+    color: "gray",
+    fontSize: 16,
+  },
+  input: {
+    backgroundColor: Colors.light.background,
+    padding: 10,
+    borderWidth: 0.5,
+    borderRadius: 5,
+    borderColor: '#bbb',
+    marginTop: 5,
+    marginBottom: 10,
+  },
+  error: {
+    color: "#dc0933",
+    padding: 2,
+  },
+});
 
 export default Input;
