@@ -3,13 +3,6 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Link, Stack } from "expo-router";
 import { Pressable, useColorScheme } from "react-native";
 
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>["name"];
-  color: string;
-}) {
-  return <FontAwesome size={20} style={{ marginBottom: -3 }} {...props} />;
-}
-
 export default function MenuStack() {
   const colorScheme = useColorScheme();
   return (

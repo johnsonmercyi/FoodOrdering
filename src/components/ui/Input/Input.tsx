@@ -5,6 +5,7 @@ type InputType = {
   error?: boolean;
   errorMessage?:string;
   label?: string;
+  isPassword?: boolean;
 } & React.ComponentPropsWithoutRef<typeof TextInput>;
 
 const Input = ({
@@ -12,6 +13,7 @@ const Input = ({
   errorMessage,
   value,
   label,
+  isPassword,
   ...otherTextInputProps
 }: InputType): JSX.Element => {
   return (
@@ -20,11 +22,12 @@ const Input = ({
 
       <TextInput
         {...otherTextInputProps}
+        secureTextEntry={isPassword}
         value={value}
         style={[
           styles.input,
           {
-            marginBottom: !error ? 10 : 0,
+            marginBottom: !error ? 15 : 0,
             borderColor: error ? "#dc0933" : "#bbb",
             borderWidth: error ? 1 : 0.5,
           },
@@ -35,7 +38,7 @@ const Input = ({
           style={[
             styles.error,
             {
-              marginBottom: error ? 10 : 0,
+              marginBottom: error ? 15 : 0,
             },
           ]}
         >
@@ -50,7 +53,7 @@ const styles = StyleSheet.create({
   container: {},
   label: {
     color: "gray",
-    fontSize: 16,
+    fontSize: 15,
   },
   input: {
     backgroundColor: Colors.light.background,
