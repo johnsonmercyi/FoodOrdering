@@ -52,14 +52,24 @@ export default function TabLayout() {
         />
 
         <Tabs.Screen
+          name="orders"
+          options={{
+            title: "Orders",
+            headerShown: false,
+            tabBarIcon: ({ color }) => (
+              <TabBarIcon name="list" color={color} />
+            ),
+          }}
+        />
+
+        <Tabs.Screen
           name="two"
           options={{
-            title: "Tab Two",
-            tabBarIcon: ({ color }) => <TabBarIcon name="list" color={color} />,
+            title: "Profile",
+            tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
           }}
         />
       </Tabs>
-
     </KeyboardAvoidingView>
   );
 }

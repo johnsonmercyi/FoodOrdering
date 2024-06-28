@@ -71,16 +71,19 @@ const SignInScreen = () => {
           placeholder="password"
           value={password}
           onChangeText={(text) => setPassword(text)}
-          isPassword
+          secureTextEntry
         />
 
         <Button text="Sign in" onPress={submitHandler} />
 
-        <Text onPress={() => {
-          setEmail("");
-          setPassword("");
-          router.push(`/sign-up`);
-        }} style={styles.textButton}>
+        <Text
+          onPress={() => {
+            setEmail("");
+            setPassword("");
+            router.push(`/sign-up`);
+          }}
+          style={styles.textButton}
+        >
           Create an account
         </Text>
       </View>

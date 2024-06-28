@@ -71,7 +71,7 @@ const SignUpScreen = () => {
           placeholder="password"
           value={password}
           onChangeText={(text) => setPassword(text)}
-          isPassword
+          secureTextEntry
         />
 
         <Button text="Create account" onPress={submitHandler} />

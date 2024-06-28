@@ -5,7 +5,6 @@ type InputType = {
   error?: boolean;
   errorMessage?:string;
   label?: string;
-  isPassword?: boolean;
 } & React.ComponentPropsWithoutRef<typeof TextInput>;
 
 const Input = ({
@@ -13,7 +12,6 @@ const Input = ({
   errorMessage,
   value,
   label,
-  isPassword,
   ...otherTextInputProps
 }: InputType): JSX.Element => {
   return (
@@ -22,7 +20,6 @@ const Input = ({
 
       <TextInput
         {...otherTextInputProps}
-        secureTextEntry={isPassword}
         value={value}
         style={[
           styles.input,
