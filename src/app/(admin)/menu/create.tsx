@@ -200,6 +200,7 @@ const CreateProductScreen = (): JSX.Element => {
           <Image
             source={{ uri: image || defaultPizzaImage }}
             style={styles.image}
+            resizeMode="cover"
           />
           <Text onPress={pickImage} style={styles.textButton}>
             Select Image
@@ -225,9 +226,11 @@ const CreateProductScreen = (): JSX.Element => {
         <Button text={isUpdating ? `Update` : `Create`} onPress={onSubmit} />
         {isUpdating && (
           <Text
-            style={[styles.textButton, { marginVertical: 10}]}
+            style={[styles.textButton, { marginVertical: 10 }]}
             onPress={confirmDelete}
-          >Delete</Text>
+          >
+            Delete
+          </Text>
         )}
       </ScrollView>
     </View>
@@ -247,6 +250,7 @@ const styles = StyleSheet.create({
   image: {
     width: "80%",
     aspectRatio: 1,
+    borderRadius: 200,
   },
   textButton: {
     color: Colors.light.tint,
