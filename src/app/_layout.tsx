@@ -14,6 +14,7 @@ import { useColorScheme } from "@/src/components/useColorScheme";
 import CartProvider from "../providers/CartProvider";
 import { Pressable, Text, View } from "react-native";
 import Colors from "../constants/Colors";
+import AuthProvider from "../providers/AuthProvider";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -57,45 +58,47 @@ function RootLayoutNav() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <CartProvider>
-        <Stack>
-          <Stack.Screen name="(admin)" options={{ headerShown: false }} />
-          <Stack.Screen name="(user)" options={{ headerShown: false }} />
-          <Stack.Screen name="(auth)" options={{headerShown: false }} />
-          <Stack.Screen
-            name="cart"
-            options={{
-              headerRight: () => (
-                <View>
-                  <Link href={`/menu/`} asChild>
-                    <Pressable
-                      style={{
-                        alignItems: "center",
-                        justifyContent: "flex-end",
-                      }}
-                    >
-                      {({ pressed }) => (
-                        <FontAwesome
-                          name="cart-plus"
-                          size={30}
-                          color={Colors[colorScheme ?? "light"].tint}
-                          style={{
-                            opacity: pressed ? 0.5 : 1,
-                            marginRight: 15,
-                          }}
-                        />
-                      )}
-                    </Pressable>
-                  </Link>
-                  {/* <Text style={{ fontSize: 11 }}>Menu</Text> */}
-                </View>
-              ),
-              presentation: "modal",
-              title: "Shopping Cart",
-            }}
-          />
-        </Stack>
-      </CartProvider>
+      <AuthProvider>
+        <CartProvider>
+          <Stack>
+            <Stack.Screen name="(admin)" options={{ headerShown: false }} />
+            <Stack.Screen name="(user)" options={{ headerShown: false }} />
+            <Stack.Screen name="(auth)" options={{headerShown: false }} />
+            <Stack.Screen
+              name="cart"
+              options={{
+                headerRight: () => (
+                  <View>
+                    <Link href={`/menu/`} asChild>
+                      <Pressable
+                        style={{
+                          alignItems: "center",
+                          justifyContent: "flex-end",
+                        }}
+                      >
+                        {({ pressed }) => (
+                          <FontAwesome
+                            name="cart-plus"
+                            size={30}
+                            color={Colors[colorScheme ?? "light"].tint}
+                            style={{
+                              opacity: pressed ? 0.5 : 1,
+                              marginRight: 15,
+                            }}
+                          />
+                        )}
+                      </Pressable>
+                    </Link>
+                    {/* <Text style={{ fontSize: 11 }}>Menu</Text> */}
+                  </View>
+                ),
+                presentation: "modal",
+                title: "Shopping Cart",
+              }}
+            />
+          </Stack>
+        </CartProvider>
+      </AuthProvider>
     </ThemeProvider>
   );
 }

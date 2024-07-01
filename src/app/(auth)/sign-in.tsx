@@ -2,9 +2,10 @@ import { View } from "@/src/components/Themed";
 import Button from "@/src/components/ui/Button/Button";
 import Input from "@/src/components/ui/Input/Input";
 import Colors from "@/src/constants/Colors";
+import { supabase } from "@/src/lib/supabase";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { ScrollView, StyleSheet, Text } from "react-native";
+import { Alert, ScrollView, StyleSheet, Text } from "react-native";
 
 type ErrorInputs = {
   email: string;
@@ -21,9 +22,35 @@ const SignInScreen = () => {
     password: "",
   });
 
-  const submitHandler = () => {
+  const [loading, setLoading] = useState(false);
+  const [cooldown, setCooldown] = useState(false);
+
+  const signInWithEmail = async () => {
     if (validateInputs()) {
-      console.warn("Submitting...");
+      setLoading(true);
+      if (cooldown) {
+        Alert.alert("Please wait before trying again.");
+        return;
+      }
+
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) {
+        if (error.message.includes("rate limit")) {
+          setCooldown(true);
+          setTimeout(() => setCooldown(false), 60000); // 60 seconds cooldown
+        }
+        Alert.alert("Error", error.message);
+      } else {
+        // Alert.alert("Success", "Sign in successfully!", []);
+        resetInputs();
+        setLoading(false);
+      }
+    } else {
+      Alert.alert("Invalid Input", "Please fill in both email and password.");
     }
   };
 
@@ -52,6 +79,12 @@ const SignInScreen = () => {
     return false;
   };
 
+  const resetInputs = () => {
+    setEmail("");
+    setPassword("");
+    setErrorInputs({ email: "", password: "" });
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.content}>
@@ -74,7 +107,11 @@ const SignInScreen = () => {
           secureTextEntry
         />
 
-        <Button text="Sign in" onPress={submitHandler} />
+        <Button
+          text={loading ? `Signing in...` : `Sign in`}
+          disabled={loading}
+          onPress={signInWithEmail}
+        />
 
         <Text
           onPress={() => {

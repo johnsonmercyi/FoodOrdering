@@ -4,6 +4,8 @@ import Colors from "@/src/constants/Colors";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { supabase } from "@/src/lib/supabase";
+import { Alert } from "react-native";
 
 type ErrorInputs = {
   email: string;
@@ -15,15 +17,47 @@ const SignUpScreen = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [cooldown, setCooldown] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [errorInputs, setErrorInputs] = useState<ErrorInputs>({
     email: "",
     password: "",
   });
 
-  const submitHandler = () => {
+  const signUpWithEmail = async () => {
     if (validateInputs()) {
-      console.warn("Submitting...");
+      setLoading(true);
+      if (cooldown) {
+        Alert.alert("Please wait before trying again.");
+        return;
+      }
+
+      const { error } = await supabase.auth.signUp({ email, password });
+      if (error) {
+        if (error.message.includes("rate limit")) {
+          setCooldown(true);
+          setTimeout(() => setCooldown(false), 60000); // 60 seconds cooldown
+        }
+        Alert.alert("Error", error.message);
+      } else {
+        Alert.alert(
+          "Success",
+          "Please check your email to verify your account.",
+          [
+            {
+              text: "Let me Sign in!",
+              onPress: () => {
+                router.back();
+              }
+            }
+          ]
+        );
+        resetInputs();
+        setLoading(false);
+      }
+    } else {
+      Alert.alert("Invalid Input", "Please fill in both email and password.");
     }
   };
 
@@ -37,7 +71,7 @@ const SignUpScreen = () => {
         ...errors,
         password: "Password is required",
       }));
-    } else if (password.trim().length < 8) {
+    } else if (password.trim().length < 6) {
       setErrorInputs((errors) => ({
         ...errors,
         password: "Password must be minimum of 6 characters",
@@ -50,6 +84,12 @@ const SignUpScreen = () => {
     }
 
     return false;
+  };
+
+  const resetInputs = () => {
+    setEmail("");
+    setPassword("");
+    setErrorInputs({ email: "", password: "" });
   };
 
   return (
@@ -74,13 +114,20 @@ const SignUpScreen = () => {
           secureTextEntry
         />
 
-        <Button text="Create account" onPress={submitHandler} />
+        <Button
+          text={loading ? `Creating account...` : `Create account`}
+          onPress={signUpWithEmail}
+          disabled={loading}
+        />
 
-        <Text onPress={() => {
-          setEmail("");
-          setPassword("");
-          router.back()
-        }} style={styles.textButton}>
+        <Text
+          onPress={() => {
+            setEmail("");
+            setPassword("");
+            router.back();
+          }}
+          style={styles.textButton}
+        >
           Sign in
         </Text>
       </View>
